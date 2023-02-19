@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
-import Modal from '../utils/Modal';
-import { TextBoxComponent } from '@syncfusion/ej2-react-inputs';
-
+import "../css/table.css";
 
 import HeroImage from '../images/hero-image-01.jpg';
 
 function HeroHome() {
   const [destinationValue, setDestinationValue] = useState('');
   const [startValue, setStartValue] = useState('');
-  const [steps, setSteps] = useState([]);
+  const [trips, setTrips] = useState([]);
 
 
   const handleClick = async () => {
@@ -33,7 +31,7 @@ function HeroHome() {
 
     fetch('https://travel-co2-climate-carbon-emissions.p.rapidapi.com/api/v1/simpletrips', options)
       .then(response => response.json())
-      .then(data => setSteps(data.trips[0].steps))
+      .then(data => setTrips(data.trips))
       .catch(err => console.error(err));
 
     console.log(steps);
@@ -108,26 +106,33 @@ function HeroHome() {
             </div>
             <button onClick={handleClick}>Submit</button>
             <div>
+              
+            {trips.map((outTrip) => (
               <table>
                 <thead>
                   <tr>
+                    
+                    <th>Location</th>
                     <th>Type</th>
                     <th>CO2e</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {steps.map((trip, index) => (
+                  {outTrip.steps.map((trip, index) => (
                     <tr key={index}>
                       <td>{trip?.location?.placename ?? "-"}</td>
                       <td>{trip?.transport?.vehicle?.type ?? "-"}</td>
                       <td>{trip?.transport?.co2e ?? "-"}</td>
                     </tr>
-                  ))}
+                  ))
+                  
+                  }
                 </tbody>
               </table>
-            </div>
+            ))}
           </div>
         </div>
+      </div>
       </div>
     </section>
   );
