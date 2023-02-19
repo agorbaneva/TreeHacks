@@ -90,6 +90,7 @@ function HeroHome() {
               <input
                 type="text"
                 value={startValue}
+                style={{backgroundColor: '#5D5DFF'}}
                 onChange={(e) => setStartValue(e.target.value)}
               />
             </div>
@@ -97,6 +98,7 @@ function HeroHome() {
               <input
                 type="text"
                 value={destinationValue}
+                style={{backgroundColor: '#5D5DFF'}}
                 onChange={(e) => setDestinationValue(e.target.value)}
               />
             </div>
