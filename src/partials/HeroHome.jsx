@@ -1,10 +1,42 @@
 import React, { useState } from 'react';
 import Modal from '../utils/Modal';
+import { TextBoxComponent } from '@syncfusion/ej2-react-inputs';
+
 
 import HeroImage from '../images/hero-image-01.jpg';
 
 function HeroHome() {
-  const [videoModalOpen, setVideoModalOpen] = useState(false);
+  const [destinationValue, setDestinationValue] = useState('');
+  const [startValue, setStartValue] = useState('');
+  const [result, setResult] = useState('');
+
+  const handleClick = async () => {
+    console.log(startValue, destinationValue)
+    const options = {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+        'X-RapidAPI-Key': '8d059bf8d8mshd4b328215e21687p1b283ajsn41e8da8a6e21',
+        'X-RapidAPI-Host': 'travel-co2-climate-carbon-emissions.p.rapidapi.com'
+      },
+      body: JSON.stringify({
+        from: startValue,
+        to: destinationValue,
+        ways: 2,
+        people: 2,
+        language: "en",
+        title: `Comparing flying and public transport from ${startValue} to ${destinationValue}.`,
+        transport_types: ["flying", "public-transport"]
+      }).replace(`"${startValue}"`, "\"" + startValue +  "\"").replace(`"${destinationValue}"`, "\"" + destinationValue +  "\"")
+    };
+    console.log(options.body)
+    const response = await fetch('https://travel-co2-climate-carbon-emissions.p.rapidapi.com/api/v1/simpletrips', options)
+      .then(response => response.json())
+      .then(response => console.log(response))
+      .catch(err => console.error(err));
+    //const data = await response.json();
+    setResult(response);
+  }
 
   return (
     <section>
@@ -54,6 +86,22 @@ function HeroHome() {
                 </a>
               </div>
             </div>
+            <div>
+              <input
+                type="text"
+                value={startValue}
+                onChange={(e) => setStartValue(e.target.value)}
+              />
+            </div>
+            <div>
+              <input
+                type="text"
+                value={destinationValue}
+                onChange={(e) => setDestinationValue(e.target.value)}
+              />
+            </div>
+            <button onClick={handleClick}>Submit</button>
+            <p>{result}</p>
           </div>
         </div>
       </div>
