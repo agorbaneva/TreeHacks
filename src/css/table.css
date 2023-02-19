@@ -3,6 +3,9 @@
   border-collapse: collapse;
   margin: 0 auto;
   font-size: 16px;
+  color: black;
+  background-color: white;
+  margin-top: 10px; 
 }
 
 .my-table th, .my-table td {
@@ -23,3 +26,22 @@
 .my-table tr:hover {
   background-color: #ddd;
 }
+
+input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+input {
+  color: white;
+}
+
+input::placeholder {
+  color: rgb(199, 188, 188);
+}
+  

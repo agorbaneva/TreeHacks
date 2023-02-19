@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import "../css/table.css";
 
-import HeroImage from '../images/hero-image-01.jpg';
-
 function HeroHome() {
   const [destinationValue, setDestinationValue] = useState('');
   const [startValue, setStartValue] = useState('');
@@ -34,10 +32,6 @@ function HeroHome() {
       .then(data => setTrips(data.trips))
       .catch(err => console.error(err));
 
-    console.log(steps);
-    
-    // console.log(co2eAndVehicle);
-    // setResult(response);
   }
 
   return (
@@ -71,28 +65,17 @@ function HeroHome() {
           {/* Section header */}
           <div className="max-w-3xl mx-auto text-center pb-12 md:pb-16">
             <h1 className="h1 mb-4" data-aos="fade-up">
-              Landing template for startups
+               Sustainability for the public
             </h1>
             <p className="text-xl text-gray-400 mb-8" data-aos="fade-up" data-aos-delay="200">
-              Our landing page template works on all devices, so you only have to set it up once, and get beautiful results forever.
+              Enter your starting and ending destinations in the forms of two cities to see public transport options and their CO2 omissions.
             </p>
-            <div className="max-w-xs mx-auto sm:max-w-none sm:flex sm:justify-center">
-              <div data-aos="fade-up" data-aos-delay="400">
-                <a className="btn text-white bg-purple-600 hover:bg-purple-700 w-full mb-4 sm:w-auto sm:mb-0" href="#0">
-                  Start free trial
-                </a>
-              </div>
-              <div data-aos="fade-up" data-aos-delay="600">
-                <a className="btn text-white bg-gray-700 hover:bg-gray-800 w-full sm:w-auto sm:ml-4" href="#0">
-                  Learn more
-                </a>
-              </div>
-            </div>
             <div>
               <input
                 type="text"
                 value={startValue}
-                style={{backgroundColor: '#5D5DFF'}}
+                style={{backgroundColor: '#5D5DFF', color: 'white'}}
+                placeholder="Enter your starting destination"
                 onChange={(e) => setStartValue(e.target.value)}
               />
             </div>
@@ -100,7 +83,8 @@ function HeroHome() {
               <input
                 type="text"
                 value={destinationValue}
-                style={{backgroundColor: '#5D5DFF'}}
+                placeholder="Enter your ending destination"
+                style={{backgroundColor: '#5D5DFF', color: 'white'}}
                 onChange={(e) => setDestinationValue(e.target.value)}
               />
             </div>
@@ -108,7 +92,7 @@ function HeroHome() {
             <div>
               
             {trips.map((outTrip) => (
-              <table>
+              <table  className="my-table">
                 <thead>
                   <tr>
                     
