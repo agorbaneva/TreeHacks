@@ -8,7 +8,8 @@ import HeroImage from '../images/hero-image-01.jpg';
 function HeroHome() {
   const [destinationValue, setDestinationValue] = useState('');
   const [startValue, setStartValue] = useState('');
-  const [result, setResult] = useState('');
+  const [steps, setSteps] = useState([]);
+
 
   const handleClick = async () => {
     console.log(startValue, destinationValue)
@@ -16,7 +17,7 @@ function HeroHome() {
       method: 'POST',
       headers: {
         'content-type': 'application/json',
-        'X-RapidAPI-Key': '8d059bf8d8mshd4b328215e21687p1b283ajsn41e8da8a6e21',
+        'X-RapidAPI-Key': 'd011a6c681mshb0a921dd758cebep19ac12jsn3b0cdfa71db3',
         'X-RapidAPI-Host': 'travel-co2-climate-carbon-emissions.p.rapidapi.com'
       },
       body: JSON.stringify({
@@ -26,16 +27,19 @@ function HeroHome() {
         people: 2,
         language: "en",
         title: `Comparing flying and public transport from ${startValue} to ${destinationValue}.`,
-        transport_types: ["flying", "public-transport"]
+        transport_types: ["public-transport"]
       }).replace(`"${startValue}"`, "\"" + startValue +  "\"").replace(`"${destinationValue}"`, "\"" + destinationValue +  "\"")
     };
-    console.log(options.body)
-    const response = await fetch('https://travel-co2-climate-carbon-emissions.p.rapidapi.com/api/v1/simpletrips', options)
+
+    fetch('https://travel-co2-climate-carbon-emissions.p.rapidapi.com/api/v1/simpletrips', options)
       .then(response => response.json())
-      .then(response => console.log(response))
+      .then(data => setSteps(data.trips[0].steps))
       .catch(err => console.error(err));
-    //const data = await response.json();
-    setResult(response);
+
+    console.log(steps);
+    
+    // console.log(co2eAndVehicle);
+    // setResult(response);
   }
 
   return (
@@ -103,7 +107,25 @@ function HeroHome() {
               />
             </div>
             <button onClick={handleClick}>Submit</button>
-            <p>{result}</p>
+            <div>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>CO2e</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {steps.map((trip, index) => (
+                    <tr key={index}>
+                      <td>{trip?.location?.placename ?? "-"}</td>
+                      <td>{trip?.transport?.vehicle?.type ?? "-"}</td>
+                      <td>{trip?.transport?.co2e ?? "-"}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
